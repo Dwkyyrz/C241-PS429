@@ -1,0 +1,6 @@
+Flask
+gunicorn
+tensorflow
+numpy
+pillow
+google-cloud-firestore==2.4.0
