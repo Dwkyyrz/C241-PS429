@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Animal Detection</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Detection</string>
+    <string name="title_notifications">History</string>
+    <string name="description">Deskripsi</string>
+    <string name="judul_app">🆉 🅰🅽🅸🅼🅰🅻 🅺🅸🅳🆂</string>
+    <string name="hello"><b>Hello,There</b></string>
+    <string name="slogan"><b>LEARN ABOUT ZOO ANIMALS</b></string>
+    <string name="classify"><b>Classification</b></string>
+    <string name="classify_instruction">Lets upload a photo of an animal you want to know about!</string>
+    <string name="History"><b>This is Your History</b></string>
+    <string name="NamaHewan">Nama Hewan</string>
+    <string name="UmurHewan">32</string>
+    <string name="probabilitas">70</string>
+    <string name="Deskripsi">Singa lokal Indonesia, yang dikenal sebagai Panthera leo melanochaita,
+                             merupakan subspesies singa yang memiliki habitat utama di hutan dan savana di berbagai wilayah di Indonesia, termasuk Sumatra dan Kalimantan.
+                             Keberadaan singa ini di Indonesia seringkali menjadi simbol kekuatan dan keberanian dalam berbagai cerita rakyat dan mitologi setempat.
+                             Singa lokal Indonesia memiliki adaptasi yang unik untuk bertahan hidup di lingkungan tropis yang lembap dan sering kali bervegetasi lebat,
+                             berbeda dengan sepupu mereka yang lebih dikenal di Afrika yang umumnya hidup di padang rumput terbuka.</string>
+</resources>
