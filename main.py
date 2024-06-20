@@ -6,6 +6,7 @@ import tensorflow as tf
 import numpy as np
 from google.cloud import firestore
 import os
+import requests
 
 app = Flask(__name__)
 
@@ -17,19 +18,8 @@ db = firestore.Client()
 
 MAX_CONTENT_LENGTH = 1 * 1024 * 1024  # 1MB
 
-CATEGORY_DESCRIPTIONS = {
-    "chimpanzee": "Chimpanzee adalah ...",
-    "Jaguar": "Jaguar adalah ...",
-    "Lion": "Lion adalah ...",
-    # Tambahkan kategori lain di sini
-}
-
-CATEGORY_AGES = {
-    "chimpanzee": 20,
-    "Jaguar": 12,
-    "Lion": 15,
-    # Tambahkan kategori lain di sini
-}
+# URL publik ke file JSON di Google Cloud Storage
+PUBLIC_URL = "https://storage.googleapis.com/bucket-kategori-hewan/kategori.json"
 
 # Fungsi untuk memuat model dari URL publik
 def load_model_from_local():
@@ -44,6 +34,19 @@ def load_model_from_local():
 
 # Muat model sekali saat aplikasi mulai
 model = load_model_from_local()
+
+# Fungsi untuk mengambil data kategori dari URL publik
+def get_category_data():
+    try:
+        response = requests.get(PUBLIC_URL)
+        response.raise_for_status()
+        return response.json()
+    except Exception as e:
+        print(f"Error fetching category data: {e}")
+        return None
+
+# Ambil data kategori saat aplikasi mulai
+category_data = get_category_data()
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -72,8 +75,14 @@ def predict():
             result, probability = model_predict(file)
             print(f"Prediction result: {result}")
             response_id = str(uuid.uuid4())
-            description = CATEGORY_DESCRIPTIONS.get(result)
-            age = CATEGORY_AGES.get(result, "Age not found")
+            
+            if category_data is None:
+                return jsonify({"status": "fail", "message": "Category data not found"}), 400
+            
+            category_info = category_data.get(result, {})
+            description = category_info.get("description", "Description not found")
+            age = category_info.get("age", "Age not found")
+            
             response_data = {
                 "id": response_id,
                 "result": result,
@@ -125,7 +134,7 @@ def model_predict(file):
         probabilities = tf.nn.softmax(predictions)[0]
         confidence_score = tf.reduce_max(probabilities).numpy() * 100
         predicted_class = tf.argmax(probabilities).numpy()
-        categories = list(CATEGORY_DESCRIPTIONS.keys())
+        categories = list(category_data.keys())  # Mengambil kategori dari data yang diambil dari GCS
         result = categories[predicted_class]
         print(f"Predicted class: {result}, confidence score: {confidence_score} %")
         
