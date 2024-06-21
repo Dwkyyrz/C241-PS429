@@ -23,7 +23,7 @@ Z Animal Kids is an Application for Education and Predictions on Animals in Zoos
 
 ## Documentation
 
-![Z Animal Kids]()
+![Z Animal Kids](https://github.com/Dwkyyrz/C241-PS429/blob/main/assets/app.png)
 
 ## Repositories
 
